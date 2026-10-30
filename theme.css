@@ -1,0 +1,317 @@
+/* =========================================================
+   THEME: dark wine + red/coral gradient + animations
+   index.css ke BAAD import karna (main.jsx me)
+   ========================================================= */
+
+:root {
+  --bg: #0d0709;
+  --bg-soft: #1c0b11;
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #fff3f0;
+  --muted: #c9a6a6;
+
+  /* naam purane hain, rang naye (red / coral / amber) */
+  --violet: #ff3d5a;
+  --pink: #ff7a59;
+  --cyan: #ffb36b;
+  --lime: #ffd27a;
+
+  --grad: linear-gradient(120deg, #ff3d5a, #ff7a59, #ffb36b);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: "Inter", system-ui, sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Sora", "Space Grotesk", system-ui, sans-serif !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+h1 {
+  line-height: 1.05;
+}
+
+::selection {
+  background: #ff3d5a;
+  color: #fff;
+}
+
+/* ---------- animated glowing background blobs ---------- */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 55vmax;
+  height: 55vmax;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.22;
+  pointer-events: none;
+}
+body::before {
+  top: -20vmax;
+  left: -15vmax;
+  background: #ff3d5a;
+  animation: floatA 18s ease-in-out infinite alternate;
+}
+body::after {
+  bottom: -25vmax;
+  right: -15vmax;
+  background: #ff7a59;
+  animation: floatB 22s ease-in-out infinite alternate;
+}
+
+@keyframes floatA {
+  to { transform: translate(18vmax, 12vmax) scale(1.15); }
+}
+@keyframes floatB {
+  to { transform: translate(-16vmax, -10vmax) scale(1.2); }
+}
+
+/* ---------- sections transparent, text readable ---------- */
+.sec,
+.sec-tint {
+  background: transparent !important;
+  color: var(--text);
+}
+.lead,
+.sec p {
+  color: var(--muted);
+}
+
+/* ---------- gradient headings ---------- */
+h2 {
+  background: var(--grad);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shine 8s ease infinite;
+}
+@keyframes shine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ---------- navbar glass ---------- */
+header,
+nav {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+header {
+  background: rgba(13, 7, 9, 0.6) !important;
+  border-bottom: 1px solid var(--border);
+}
+nav a {
+  position: relative;
+  color: var(--text);
+}
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--grad);
+  transition: width 0.3s ease;
+}
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ---------- buttons ---------- */
+.btn,
+button.btn,
+a.btn {
+  position: relative;
+  overflow: hidden;
+  background: var(--grad) !important;
+  background-size: 200% 200% !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 999px;
+  box-shadow: 0 8px 28px rgba(255, 61, 90, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: shine 6s ease infinite;
+}
+.btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 38px rgba(255, 122, 89, 0.5);
+}
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* outline wala button */
+.btn-ghost,
+a.btn.btn-ghost {
+  background: transparent !important;
+  border: 1.5px solid var(--border) !important;
+  box-shadow: none;
+  animation: none;
+}
+.btn-ghost:hover {
+  border-color: #ff7a59 !important;
+  background: var(--surface) !important;
+}
+
+/* ---------- pricing + services cards (class naam me plan/card/service ho to) ---------- */
+[class*="plan"],
+[class*="price-card"],
+[class*="service"],
+[class*="card"] {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  color: var(--text);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+[class*="plan"]:hover,
+[class*="price-card"]:hover,
+[class*="service"]:hover,
+[class*="card"]:hover {
+  transform: translateY(-8px);
+  border-color: #ff3d5a;
+  box-shadow: 0 18px 48px rgba(255, 61, 90, 0.3);
+}
+[class*="featured"] {
+  border-color: #ff7a59 !important;
+  box-shadow: 0 0 40px rgba(255, 122, 89, 0.35);
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 24px rgba(255, 122, 89, 0.3); }
+  50% { box-shadow: 0 0 52px rgba(255, 61, 90, 0.55); }
+}
+
+/* ---------- chips / skills ---------- */
+.chip,
+.skills li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+.chip:hover,
+.skills li:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+.chip.is-active {
+  background: var(--grad);
+  border-color: transparent;
+  color: #fff;
+}
+
+/* ---------- about photo ---------- */
+.photo {
+  border-radius: 24px;
+  box-shadow: 0 0 0 3px #ff3d5a, 0 0 50px rgba(255, 61, 90, 0.45);
+  animation: bob 5s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ---------- contact form ---------- */
+.form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+.form label {
+  color: var(--muted);
+}
+.form input,
+.form select,
+.form textarea {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.form select option {
+  background: var(--bg-soft);
+  color: var(--text);
+}
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: #ff7a59 !important;
+  box-shadow: 0 0 0 3px rgba(255, 122, 89, 0.25);
+}
+.form-note {
+  color: var(--lime);
+}
+
+.socials a,
+.contact-mail a,
+.text-link {
+  color: #ffb36b;
+  transition: color 0.2s ease, letter-spacing 0.2s ease;
+}
+.socials a:hover,
+.contact-mail a:hover,
+.text-link:hover {
+  color: #ff3d5a;
+  letter-spacing: 0.4px;
+}
+
+/* ---------- scroll reveal (reveal.js isse use karta hai) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px) scale(0.98);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- jinhe animation se dikkat ho unke liye ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
